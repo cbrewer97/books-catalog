@@ -37,9 +37,40 @@ date_search_label=ttk.Label(my_books_frame, text="Date: ")
 isbn_search_label=ttk.Label(my_books_frame, text="ISBN: ")
 tags_search_label=ttk.Label(my_books_frame, text="Tags: ")
 
+title_search_field=ttk.Entry(my_books_frame)
+author_search_field=ttk.Entry(my_books_frame)
+date_search_field=ttk.Entry(my_books_frame)
+isbn_search_field=ttk.Entry(my_books_frame)
+tags_search_field=ttk.Entry(my_books_frame)
 
-for label in [title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]:
-    label.pack()
+
+for index, label in enumerate([title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]):
+    label.grid(row=index+1, column=1)
+    
+for index, field in enumerate([title_search_field, author_search_field, date_search_field, isbn_search_field, tags_search_field]):
+    field.grid(row=index+1, column=2, sticky='w')
+    
+    
+def create_book_frame(book_dict,parent):
+    book_frame=ttk.Frame(parent)
+    for index, tup in enumerate(book_dict.items()):
+        key=tup[0]
+        value=tup[1]
+        attribute_string=str(key)+" :"
+        attribute_label=ttk.Label(book_frame,text=attribute_string)
+        value_label=ttk.Label(book_frame, text=str(value), wraplength=100)
+        attribute_label.grid(row=index+1, column=1)
+        value_label.grid(row=index+1, column=2)
+    return book_frame
+
+from db_tools import *
+
+search_results=search_books(title='Great')
+book_tuple=search_results[0]
+book_dict=as_dict(book_tuple)
+
+result_frame=create_book_frame(book_dict, my_books_frame)
+result_frame.grid(row=6, column=1)
 
 
 root.mainloop()

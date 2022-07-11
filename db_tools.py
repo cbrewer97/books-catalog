@@ -84,5 +84,13 @@ def search_books(**kwargs):
     query_string=query_string.strip("and ")
     return connection.execute(query_string).fetchall()
 
+def as_dict(result_tuple):
+    results_dict=dict()
+    keys=get_column_names('books')
+    for index, result in enumerate(result_tuple):
+        key=keys[index]
+        results_dict[key]=result
+    return results_dict
+
             
             
