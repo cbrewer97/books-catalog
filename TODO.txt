@@ -8,16 +8,22 @@ X re-create table with id
 - create authors table (can wait until v0.2)
 X create function for search
   - improve the logic for string vs int vs date datatypes
-- create function for list all
+  - improve logic for authors search
+  - Add options for ranges in fields like id, publish_date, page_count
+  - phase out kwargs for better signatures
+    - add default values for all fields, then check for which ones
+      are actually supplied
+X create function for list all
   - add option for order by
-- create function to get info from Google Books
+X create function to get info from Google Books
   - create function to generate Google Books query URL
+  - improve ability to see how many results there are
+  - only return fields that are potentially useful
 - create function to edit an entry
-- Add navigation buttons to top
-  - create functions to change the visible frame
 - Add columns to db
-  - notes
-  - tags
+  X notes
+  X tags
+  - recreate table
 - create tools to generate query strings
 
 ==============
@@ -33,7 +39,11 @@ GUI          |
 - create frame for adding a record
   - add a field for each column
   - add a field for searching from ISBN
+- Add navigation buttons to top
+  - create functions to change the visible frame
+- Improve resize behavior
+
 
 
 - Should manual entry and automatic entry be same frame or different frame?
-
+- Improve comments and docstrings

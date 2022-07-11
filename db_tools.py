@@ -58,7 +58,8 @@ def create_books_table():
     connection.execute('create table books(id integer primary key, \
         title text, authors text, publisher text, publish_date text, \
         description text, isbn10 integer, isbn13 integer, \
-        page_count integer, image_path text )')
+        page_count integer, notes text, tags text, \
+        image_path text )')
     connection.commit()
         
 def is_integer(value):
@@ -82,5 +83,6 @@ def search_books(**kwargs):
             query_string=query_string+key+" like '%"+value+"%' and "
     query_string=query_string.strip("and ")
     return connection.execute(query_string).fetchall()
+
             
             
