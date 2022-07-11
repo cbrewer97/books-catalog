@@ -42,8 +42,9 @@ GUI          |
 - Add navigation buttons to top
   - create functions to change the visible frame
 - Improve resize behavior
+- Change application taskbar name
 
 
-
+- Redo code in pysimplegui?
 - Should manual entry and automatic entry be same frame or different frame?
 - Improve comments and docstrings
