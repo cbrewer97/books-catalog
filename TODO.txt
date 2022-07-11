@@ -1,0 +1,30 @@
+Backend    |
+==============
+- create function to insert record
+  - default value for each column is None
+- re-create table with id
+- create authors table (can wait until v0.2)
+- create function for search
+- create function for list all
+  - add option for order by
+-create function to get info from Google Books
+-create function to edit an entry
+- Add navigation buttons to top
+  - create functions to change the visible frame
+
+==============
+GUI        |
+==============
+- create frame for search
+  - add search fields
+  - add dropdown for order by
+    - v0.2 can allow nested order by
+  - add scrollbar	
+  - limit to 10 per page
+  - add button for editing an entry
+- create frame for adding a record
+  - add a field for each column
+  - add a field for searching from ISBN
+
+- Should manual entry and automatic entry be same frame or different    frame?
+
