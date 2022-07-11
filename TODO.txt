@@ -4,9 +4,10 @@ Backend      |
 X create function to insert record
   X default value for each column is None
   - Make table name more robust
-- re-create table with id
+X re-create table with id
 - create authors table (can wait until v0.2)
-- create function for search
+X create function for search
+  - improve the logic for string vs int vs date datatypes
 - create function for list all
   - add option for order by
 - create function to get info from Google Books
