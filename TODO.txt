@@ -1,19 +1,26 @@
-Backend    |
 ==============
-- create function to insert record
-  - default value for each column is None
+Backend      |
+==============
+X create function to insert record
+  X default value for each column is None
+  - Make table name more robust
 - re-create table with id
 - create authors table (can wait until v0.2)
 - create function for search
 - create function for list all
   - add option for order by
--create function to get info from Google Books
--create function to edit an entry
+- create function to get info from Google Books
+  - create function to generate Google Books query URL
+- create function to edit an entry
 - Add navigation buttons to top
   - create functions to change the visible frame
+- Add columns to db
+  - notes
+  - tags
+- create tools to generate query strings
 
 ==============
-GUI        |
+GUI          |
 ==============
 - create frame for search
   - add search fields
@@ -26,5 +33,6 @@ GUI        |
   - add a field for each column
   - add a field for searching from ISBN
 
-- Should manual entry and automatic entry be same frame or different    frame?
+
+- Should manual entry and automatic entry be same frame or different frame?
 

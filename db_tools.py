@@ -28,4 +28,25 @@ def get_tables():
     tables=results.fetchall()
     return tables
 
+def insert_record(**kwargs):
+    global connection
+    values_dict={}
+    for key,value in kwargs.items():
+        if key not in get_column_names('books'):
+            print('Invalid key: '+key)
+            print('Please use a valid key from the following list: ' +str(get_column_names('books')) )
+            raise Exception('Invalid key. Please use keys from the following list :'+ str(get_column_names('books')) )
+        else:
+            values_dict[key]=value
+    keys_tuple=tuple(values_dict.keys())
+    values_tuple=tuple(values_dict.values())
+    if len(keys_tuple)==1:
+        keys_string=str(keys_tuple).replace(',','')
+        values_string=str(values_tuple).replace(',','')
+    else:
+        keys_string=str(keys_tuple)
+        values_string=str(values_tuple)
+    query_string="insert into books"+keys_string+" values"+values_string
+    print(query_string)
+    connection.execute(query_string)
     
