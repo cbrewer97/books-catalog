@@ -10,9 +10,9 @@ from tkinter import ttk
 
 root=Tk()
 
-main_frame=ttk.Frame(root, width='800', height='600')
+main_frame=ttk.Frame(root)
 main_frame.grid(sticky='nsew')
-main_frame.grid_propagate(0)
+#main_frame.grid_propagate(0)
 
 
 navigation_frame=ttk.Frame(main_frame)
@@ -28,20 +28,25 @@ google_search_button.grid(row=1, column=3)
 
 
 
-my_books_frame=ttk.Frame(main_frame)
-my_books_frame.grid(row=2)
+# my_books_frame=ttk.Frame(main_frame)
+# my_books_frame.grid(row=2)
 
-title_search_label=ttk.Label(my_books_frame, text="Title: ")
-author_search_label=ttk.Label(my_books_frame, text="Author: ")
-date_search_label=ttk.Label(my_books_frame, text="Date: ")
-isbn_search_label=ttk.Label(my_books_frame, text="ISBN: ")
-tags_search_label=ttk.Label(my_books_frame, text="Tags: ")
 
-title_search_field=ttk.Entry(my_books_frame)
-author_search_field=ttk.Entry(my_books_frame)
-date_search_field=ttk.Entry(my_books_frame)
-isbn_search_field=ttk.Entry(my_books_frame)
-tags_search_field=ttk.Entry(my_books_frame)
+
+search_frame=ttk.Frame(main_frame)
+search_frame.grid(row=2)
+
+title_search_label=ttk.Label(search_frame, text="Title: ")
+author_search_label=ttk.Label(search_frame, text="Author: ")
+date_search_label=ttk.Label(search_frame, text="Date: ")
+isbn_search_label=ttk.Label(search_frame, text="ISBN: ")
+tags_search_label=ttk.Label(search_frame, text="Tags: ")
+
+title_search_field=ttk.Entry(search_frame)
+author_search_field=ttk.Entry(search_frame)
+date_search_field=ttk.Entry(search_frame)
+isbn_search_field=ttk.Entry(search_frame)
+tags_search_field=ttk.Entry(search_frame)
 
 
 for index, label in enumerate([title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]):
@@ -58,19 +63,46 @@ def create_book_frame(book_dict,parent):
         value=tup[1]
         attribute_string=str(key)+" :"
         attribute_label=ttk.Label(book_frame,text=attribute_string)
-        value_label=ttk.Label(book_frame, text=str(value), wraplength=100)
-        attribute_label.grid(row=index+1, column=1)
-        value_label.grid(row=index+1, column=2)
+        value_label=ttk.Label(book_frame, text=str(value), wraplength=200)
+        attribute_label.grid(row=index+1, column=1,sticky='')
+        value_label.grid(row=index+1, column=2,sticky='w')
+    book_frame.grid_columnconfigure(1, weight=1)
+    book_frame.grid_columnconfigure(2, weight=2)
     return book_frame
 
 from db_tools import *
 
-search_results=search_books(title='Great')
-book_tuple=search_results[0]
-book_dict=as_dict(book_tuple)
 
-result_frame=create_book_frame(book_dict, my_books_frame)
-result_frame.grid(row=6, column=1)
+from tkscrolledframe import ScrolledFrame
+
+scrolled_frame=ScrolledFrame(main_frame, scrollbars='vertical',use_ttk=True )
+scrolled_frame.grid(row=3)
+scrolled_frame.bind_arrow_keys(root)
+scrolled_frame.bind_scroll_wheel(root)
+my_books_frame=scrolled_frame.display_widget(Frame,fit_width=True)
+my_books_frame['borderwidth']=5
+my_books_frame['relief']='sunken'
+
+
+search_results=search_books()
+# book_tuple=search_results[0]
+# book_dict=as_dict(book_tuple)
+
+# result_frame=create_book_frame(book_dict, my_books_frame)
+# result_frame.grid(row=6, column=1)
+
+row_number=6
+for result in search_results:
+    book_dict=as_dict(result)
+    result_frame=create_book_frame(book_dict, my_books_frame)
+    result_frame['borderwidth']=5
+    result_frame['relief']='sunken'
+    result_frame.pack(fill='x',expand=True ,side='top')
+    # result_frame.grid(row=row_number,column=1,sticky='ew')
+    # result_frame.grid_columnconfigure(0, weight=1)
+    # result_frame.grid_rowconfigure(0 ,weight=1)
+    row_number+=1
+
 
 
 root.mainloop()
