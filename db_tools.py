@@ -92,5 +92,9 @@ def as_dict(result_tuple):
         results_dict[key]=result
     return results_dict
 
+def clean_description_string(book_dict):
+    book_dict['description']=book_dict['description'].replace("\'",'').replace("\"", '')
+    return book_dict
+
             
             

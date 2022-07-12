@@ -81,8 +81,7 @@ for index, label in enumerate([title_search_label, author_search_label, date_sea
 for index, field in enumerate([title_search_field, author_search_field, date_search_field, isbn_search_field, tags_search_field]):
     field.grid(row=index, column=1, sticky='w')
     
-search_button=ttk.Button(search_frame, text="Search", command=lambda: print(title_text_variable.get()))
-search_button.grid(row=search_frame.grid_size()[1], column=1, sticky='e')
+
 print(search_frame.grid_size())
     
 def create_book_frame(book_dict,parent):
@@ -113,26 +112,57 @@ my_books_frame['borderwidth']=5
 my_books_frame['relief']='sunken'
 
 
-search_results=search_books()
+#search_results=search_books()
 # book_tuple=search_results[0]
 # book_dict=as_dict(book_tuple)
 
 # result_frame=create_book_frame(book_dict, my_books_frame)
 # result_frame.grid(row=6, column=1)
 
-row_number=6
-for result in search_results:
-    book_dict=as_dict(result)
-    result_frame=create_book_frame(book_dict, my_books_frame)
-    result_frame['borderwidth']=5
-    result_frame['relief']='sunken'
-    grid_size=my_books_frame.grid_size()
-    result_frame.grid(row=grid_size[0], column=0, sticky='w')
-    #result_frame.pack(fill='x',expand=True ,side='top')
-    # result_frame.grid(row=row_number,column=1,sticky='ew')
-    # result_frame.grid_columnconfigure(0, weight=1)
-    # result_frame.grid_rowconfigure(0 ,weight=1)
-    row_number+=1
+
+
+def populate_result_frames(title):
+    #title=title_text_variable.get()
+    search_results=search_books(title=title)
+    
+    for result in search_results:
+        book_dict=as_dict(result)
+        result_frame=create_book_frame(book_dict, my_books_frame)
+        result_frame['borderwidth']=5
+        result_frame['relief']='sunken'
+        grid_size=my_books_frame.grid_size()
+        print(grid_size)
+        result_frame.grid(row=grid_size[1]+1, column=0, sticky='w')
+        #result_frame.pack(fill='x',expand=True ,side='top')
+        # result_frame.grid(row=row_number,column=1,sticky='ew')
+        # result_frame.grid_columnconfigure(0, weight=1)
+        # result_frame.grid_rowconfigure(0 ,weight=1)
+        #row_number+=1
+        
+def clear_books_results():
+    children=my_books_frame.winfo_children()
+    for child in children:
+        child.destroy()
+    my_books_frame.grid_forget()
+        
+search_button=ttk.Button(search_frame, text="Search", command=lambda:populate_result_frames(title=title_text_variable.get()))
+search_button.grid(row=search_frame.grid_size()[1], column=1, sticky='e')
+
+clear_button=ttk.Button(search_frame, text='Clear', command=clear_books_results)
+clear_button.grid(row=search_frame.grid_size()[1]-1, column=0)
+
+# for result in search_results:
+#     book_dict=as_dict(result)
+#     result_frame=create_book_frame(book_dict, my_books_frame)
+#     result_frame['borderwidth']=5
+#     result_frame['relief']='sunken'
+#     grid_size=my_books_frame.grid_size()
+#     result_frame.grid(row=grid_size[0], column=0, sticky='w')
+#     #result_frame.pack(fill='x',expand=True ,side='top')
+#     # result_frame.grid(row=row_number,column=1,sticky='ew')
+#     # result_frame.grid_columnconfigure(0, weight=1)
+#     # result_frame.grid_rowconfigure(0 ,weight=1)
+#     row_number+=1
 
 
 main_frame.grid_rowconfigure((0,1), weight=0)

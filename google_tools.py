@@ -25,3 +25,26 @@ def search_google_books(author=None, isbn=None, title=None, num_results=1, langu
         print(query_url)
     r=requests.get(query_url)
     return json.loads(r.text)['items'][0:num_results]
+
+def parse_google_record(record):
+    volume_info=record['volumeInfo']
+    title=volume_info['title']
+    authors=volume_info['authors'][0]
+    publisher=volume_info['publisher']
+    publish_date=volume_info['publishedDate']
+    description=volume_info['description']
+    identifiers=volume_info['industryIdentifiers']
+    isbn10=None
+    isbn13=None
+    for item_dict in identifiers:
+        if len(item_dict['identifier'])==10:
+            isbn10=item_dict['identifier']
+        elif len(item_dict['identifier'])==13:
+            isbn13=item_dict['identifier']
+    page_count=volume_info['pageCount']
+    parsed_dict={'title':title, 'authors':authors,\
+        'publisher':publisher, 'publish_date':publish_date,\
+        'description':description, 'isbn10':isbn10,\
+        'isbn13':isbn13, 'page_count':page_count}
+    return parsed_dict
+    
