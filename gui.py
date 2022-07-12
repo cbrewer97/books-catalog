@@ -8,15 +8,36 @@ Created on Mon Jul 11 13:53:00 2022
 from tkinter import *
 from tkinter import ttk
 
+
+# Here is a rough outline of the widget hierarchy
+#
+# root
+# -main_frame
+#   -navigation frame
+#     -My books button
+#     -Google books button
+#   -search frame
+#     -attribute labels
+#     -search fields
+#   -my books frame
+#     -result frames
+#       -attribute labels
+#       -value labels
+#
+#
+#
+#
+
 root=Tk()
 
 main_frame=ttk.Frame(root)
-main_frame.grid(sticky='nsew')
+main_frame.pack(fill='both', expand=True)
+#main_frame.grid(sticky='nsew')
 #main_frame.grid_propagate(0)
 
 
 navigation_frame=ttk.Frame(main_frame)
-navigation_frame.grid(row=1, sticky='nsew')
+navigation_frame.grid(row=0, sticky='nsew')
 
 
 my_books_button=ttk.Button(navigation_frame, text="My Books")
@@ -34,7 +55,8 @@ google_search_button.grid(row=1, column=3)
 
 
 search_frame=ttk.Frame(main_frame)
-search_frame.grid(row=2)
+search_frame.grid(row=1)
+print(search_frame.grid_size())
 
 title_search_label=ttk.Label(search_frame, text="Title: ")
 author_search_label=ttk.Label(search_frame, text="Author: ")
@@ -42,19 +64,26 @@ date_search_label=ttk.Label(search_frame, text="Date: ")
 isbn_search_label=ttk.Label(search_frame, text="ISBN: ")
 tags_search_label=ttk.Label(search_frame, text="Tags: ")
 
-title_search_field=ttk.Entry(search_frame)
+title_text_variable=StringVar()
+
+title_search_field=ttk.Entry(search_frame, textvariable=title_text_variable)
 author_search_field=ttk.Entry(search_frame)
 date_search_field=ttk.Entry(search_frame)
 isbn_search_field=ttk.Entry(search_frame)
 tags_search_field=ttk.Entry(search_frame)
 
 
+
+
 for index, label in enumerate([title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]):
-    label.grid(row=index+1, column=1)
+    label.grid(row=index, column=0)
     
 for index, field in enumerate([title_search_field, author_search_field, date_search_field, isbn_search_field, tags_search_field]):
-    field.grid(row=index+1, column=2, sticky='w')
+    field.grid(row=index, column=1, sticky='w')
     
+search_button=ttk.Button(search_frame, text="Search", command=lambda: print(title_text_variable.get()))
+search_button.grid(row=search_frame.grid_size()[1], column=1, sticky='e')
+print(search_frame.grid_size())
     
 def create_book_frame(book_dict,parent):
     book_frame=ttk.Frame(parent)
@@ -76,7 +105,7 @@ from db_tools import *
 from tkscrolledframe import ScrolledFrame
 
 scrolled_frame=ScrolledFrame(main_frame, scrollbars='vertical',use_ttk=True )
-scrolled_frame.grid(row=3)
+scrolled_frame.grid(row=2, sticky='ns')
 scrolled_frame.bind_arrow_keys(root)
 scrolled_frame.bind_scroll_wheel(root)
 my_books_frame=scrolled_frame.display_widget(Frame,fit_width=True)
@@ -97,12 +126,16 @@ for result in search_results:
     result_frame=create_book_frame(book_dict, my_books_frame)
     result_frame['borderwidth']=5
     result_frame['relief']='sunken'
-    result_frame.pack(fill='x',expand=True ,side='top')
+    grid_size=my_books_frame.grid_size()
+    result_frame.grid(row=grid_size[0], column=0, sticky='w')
+    #result_frame.pack(fill='x',expand=True ,side='top')
     # result_frame.grid(row=row_number,column=1,sticky='ew')
     # result_frame.grid_columnconfigure(0, weight=1)
     # result_frame.grid_rowconfigure(0 ,weight=1)
     row_number+=1
 
 
-
+main_frame.grid_rowconfigure((0,1), weight=0)
+main_frame.grid_rowconfigure(2, weight=1)
+main_frame.columnconfigure(0, weight=1)
 root.mainloop()

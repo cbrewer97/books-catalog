@@ -36,6 +36,7 @@ GUI          |
   - add scrollbar	
   - limit to 10 per page
   - add button for editing an entry
+- Add kwargs for function create_book_frame()
 - create frame for adding a record
   - add a field for each column
   - add a field for searching from ISBN
