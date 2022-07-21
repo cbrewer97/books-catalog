@@ -65,12 +65,16 @@ isbn_search_label=ttk.Label(search_frame, text="ISBN: ")
 tags_search_label=ttk.Label(search_frame, text="Tags: ")
 
 title_text_variable=StringVar()
+author_text_variable=StringVar()
+date_text_variable=StringVar()
+isbn_text_variable=StringVar()
+tags_text_variable=StringVar()
 
 title_search_field=ttk.Entry(search_frame, textvariable=title_text_variable)
-author_search_field=ttk.Entry(search_frame)
-date_search_field=ttk.Entry(search_frame)
-isbn_search_field=ttk.Entry(search_frame)
-tags_search_field=ttk.Entry(search_frame)
+author_search_field=ttk.Entry(search_frame, textvariable=author_text_variable)
+date_search_field=ttk.Entry(search_frame, textvariable=date_text_variable)
+isbn_search_field=ttk.Entry(search_frame, textvariable=isbn_text_variable)
+tags_search_field=ttk.Entry(search_frame, textvariable=tags_text_variable)
 
 
 
@@ -121,9 +125,9 @@ my_books_frame['relief']='sunken'
 
 
 
-def populate_result_frames(title):
+def populate_result_frames(title, author):
     #title=title_text_variable.get()
-    search_results=search_books(title=title)
+    search_results=search_books(title=title, authors=author)
     
     for result in search_results:
         book_dict=as_dict(result)
@@ -145,7 +149,10 @@ def clear_books_results():
         child.destroy()
     my_books_frame.grid_forget()
         
-search_button=ttk.Button(search_frame, text="Search", command=lambda:populate_result_frames(title=title_text_variable.get()))
+search_button=ttk.Button(search_frame, text="Search", \
+            command=lambda:populate_result_frames(\
+                        title=title_text_variable.get(), \
+                        author=author_text_variable.get()))
 search_button.grid(row=search_frame.grid_size()[1], column=1, sticky='e')
 
 clear_button=ttk.Button(search_frame, text='Clear', command=clear_books_results)
