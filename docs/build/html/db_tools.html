@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>db_tools module &#8212; books-catalog 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-db_tools">
+<span id="db-tools-module"></span><h1>db_tools module<a class="headerlink" href="#module-db_tools" title="Permalink to this headline">¶</a></h1>
+<p>Created on Sun Jul 10 17:59:40 2022</p>
+<p>&#64;author: books</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.as_dict">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">as_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a result_tuple to a dictionary, where the         dictionary keys are the corresponding column         names and the values are the entries of the tuple.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>result_tuple</strong> (<em>tuple</em>) – tuple of values representing a row         of the table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary with same values as result_tuple,         with keynames given by the corresponding column names.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.clean_description_string">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">clean_description_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">book_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.clean_description_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes [backslash ‘] and [backslash “] from the description string of         book_dict so that it doesn’t cause errors when         inserting to the db.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>book_dict</strong> (<em>dict</em>) – dictionary representing a row of the         books table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary representing a row of the books         which is same as books_dict, except that the         description is cleaned</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.create_books_table">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">create_books_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.create_books_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates table with name “books”</p>
+<p>Creates the following columns and types:</p>
+<blockquote>
+<div><p>id integer primary key,             title text, authors text, publisher text, publish_date text,             description text, isbn10 integer, isbn13 integer,             page_count integer, notes text, tags text,             image_path text</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.get_column_names">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.get_column_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of column names from given table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>table_name</strong> (<em>str</em>) – Name of table to access</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of column names.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.get_tables">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">get_tables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.get_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of tuples, where each tuple contains         the name of one table in the db.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.insert_record">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">insert_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.insert_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts a new record to the books table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – <p>optional arguments with keyname equal         to a column name of the books table. Keynames not         supplied will default to value None.</p>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.is_integer">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">is_integer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.is_integer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to test if argument is of int type,         or if it is a string that can be cast to int.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>str</em><em> or </em><em>int</em>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="db_tools.search_books">
+<span class="sig-prename descclassname"><span class="pre">db_tools.</span></span><span class="sig-name descname"><span class="pre">search_books</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#db_tools.search_books" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches the books table. For each argument supplied,         returns the records for which that argument is IN         (substring) the row’s corresponding cell. Returned         records must satisfy ALL supplied conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – <p>Optional arguments with keyname equal         to some column name from books table.</p>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of tuples, where each tuple is a row         with values in the same order as the columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">books-catalog</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Charlie Brewer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/db_tools.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
