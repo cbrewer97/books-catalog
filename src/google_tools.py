@@ -9,6 +9,24 @@ import requests
 import json
 
 def search_google_books(author=None, isbn=None, title=None, num_results=1, language="en", verbose=False):
+    """
+    Searches for book information from the Google Books API. \
+        Information is first retreived in JSON format, and \
+        then parsed to a list of dictionaries.
+    
+    :param author: Part of author name (first and/or last)
+    :type author: str
+    :param isbn: ISBN10 or ISBN13
+    :type isbn: str or int
+    :param title: Part of the book title
+    :type title: str
+    :param num_results: Number of results to be returned
+    :type num_results: int
+    :param language: String of the 2-character laguage code\
+        for the desired language
+    :type language: str
+    
+    """
     query_url="https://www.googleapis.com/books/v1/volumes?q="
     if author!=None:
         query_url=query_url+"inauthor:"+author+"+"
@@ -27,6 +45,15 @@ def search_google_books(author=None, isbn=None, title=None, num_results=1, langu
     return json.loads(r.text)['items'][0:num_results]
 
 def parse_google_record(record):
+    """
+    Removes unnecessary key/values from record and returns a \
+        dictionary with only necessary key/values.
+        
+    :param record: dictionary representing a book
+    :type record: dict
+    :returns: dictionary with only necessary key/values
+    :rtype: dict
+    """
     volume_info=record['volumeInfo']
     title=volume_info['title']
     authors=volume_info['authors'][0]

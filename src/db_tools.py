@@ -17,6 +17,15 @@ else:
     print('Created file books.db ')
     
 def get_column_names(table_name):
+    """
+Return a list of column names from given table.
+
+:param table_name: Name of table to access
+:type table_name: str
+:return: List of column names.
+:rtype: list[str]
+
+"""
     global connection
     description_tuple=connection.execute("select * from "+table_name+" ").description
     names=[]
@@ -25,12 +34,26 @@ def get_column_names(table_name):
     return names
 
 def get_tables():
+    """
+    Returns a list of tuples, where each tuple contains \
+        the name of one table in the db.    
+    """
     global connection
     results=connection.execute("select name from sqlite_master where type='table';")
     tables=results.fetchall()
     return tables
 
 def insert_record(**kwargs):
+    """
+    Inserts a new record to the books table
+    
+    :param **kwargs: optional arguments with keyname equal \
+        to a column name of the books table. Keynames not \
+        supplied will default to value None.
+        
+    :returns: None
+    
+    """
     global connection
     values_dict={}
     for key,value in kwargs.items():
@@ -54,6 +77,21 @@ def insert_record(**kwargs):
     connection.commit()
     
 def create_books_table():
+    """
+    Creates table with name "books"
+    
+    Creates the following columns and types:
+        
+        id integer primary key, \
+            title text, authors text, publisher text, publish_date text, \
+            description text, isbn10 integer, isbn13 integer, \
+            page_count integer, notes text, tags text, \
+            image_path text
+            
+    :param: None
+    :returns: None
+
+    """
     global connection
     connection.execute('create table books(id integer primary key, \
         title text, authors text, publisher text, publish_date text, \
@@ -63,6 +101,14 @@ def create_books_table():
     connection.commit()
         
 def is_integer(value):
+    """
+    Convenience function to test if argument is of int type, \
+        or if it is a string that can be cast to int.
+    
+    :param value: 
+    :type value: str or int
+    :rtype: bool
+    """
     flag=False
     if type(value)==type('string'):
         flag=value.isdigit()
@@ -71,6 +117,17 @@ def is_integer(value):
     return flag
 
 def search_books(**kwargs):
+    """
+    Searches the books table. For each argument supplied, \
+        returns the records for which that argument is IN \
+        (substring) the row\'s corresponding cell. Returned \
+        records must satisfy ALL supplied conditions.
+    
+    :param **kwargs: Optional arguments with keyname equal \
+        to some column name from books table.
+    :returns: list of tuples, where each tuple is a row \
+        with values in the same order as the columns.
+    """
     query_string="select * from books"
     if len(kwargs)>0:
         query_string=query_string+" where "
@@ -85,6 +142,18 @@ def search_books(**kwargs):
     return connection.execute(query_string).fetchall()
 
 def as_dict(result_tuple):
+    """
+    Converts a result_tuple to a dictionary, where the \
+        dictionary keys are the corresponding column \
+        names and the values are the entries of the tuple.
+        
+    :param result_tuple: tuple of values representing a row \
+        of the table
+    :type result_tuple: tuple
+    :returns: dictionary with same values as result_tuple, \
+        with keynames given by the corresponding column names.
+    :rtype: dict 
+    """
     results_dict=dict()
     keys=get_column_names('books')
     for index, result in enumerate(result_tuple):
@@ -93,6 +162,19 @@ def as_dict(result_tuple):
     return results_dict
 
 def clean_description_string(book_dict):
+    """
+    Removes [backslash \'] and [backslash \"] from the description string of \
+        book_dict so that it doesn't cause errors when \
+        inserting to the db.
+        
+    :param book_dict: dictionary representing a row of the \
+        books table
+    :type book_dict: dict
+    :returns: dictionary representing a row of the books \
+        which is same as books_dict, except that the \
+        description is cleaned
+    :rtype: dict
+    """
     book_dict['description']=book_dict['description'].replace("\'",'').replace("\"", '')
     return book_dict
 
