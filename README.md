@@ -1,6 +1,6 @@
 # Books Catalog
 
-This is a program designed to store a database of book information for books owned by the user. Further, it uses the Google Books API to make entry/retreival of book details easier, as opposed to searching/entering the relevant information by hand. This project is still in progress.
+This is a program designed to store a database of book information for books owned by the user. Further, it uses the Google Books API to make entry/retrieval of book details easier, as opposed to searching/entering the relevant information by hand. This project is still in progress.
 
 If you want to run the project, download the contents of /src and run gui.py.
 
