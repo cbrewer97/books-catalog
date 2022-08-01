@@ -5,3 +5,6 @@ This is a program designed to store a database of book information for books own
 If you want to run the project, download the contents of /src and run gui.py.
 
 To browse the documentation to get an idea of the functions and modules used for the program logic, visit the GitHub Pages for this repo [here](https://cbrewer97.github.io/books-catalog/build/html/index.html). It is probably easiest to browse using the Modules Index page.
+
+## Current Status
+I am mostly working on the GUI design. Right now, I have only implemented the ability to search and view the existing book records via GUI. Querying Google Books and importing the information to the local database still must be done manually using a Python console.
