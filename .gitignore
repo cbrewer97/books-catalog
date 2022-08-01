@@ -1,2 +1,9 @@
 books.db
 *.pyc
+docs/source/
+docs/build/html/_sources/*.txt
+docs/build/doctrees/
+docs/make.bat
+docs/Makefile
+.ipynb_checkpoints/README-checkpoint.md
+docs/build/html/.doctrees/

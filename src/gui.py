@@ -53,39 +53,41 @@ google_search_button.grid(row=1, column=3)
 # my_books_frame.grid(row=2)
 
 
-
-search_frame=ttk.Frame(main_frame)
-search_frame.grid(row=1)
-print(search_frame.grid_size())
-
-title_search_label=ttk.Label(search_frame, text="Title: ")
-author_search_label=ttk.Label(search_frame, text="Author: ")
-date_search_label=ttk.Label(search_frame, text="Date: ")
-isbn_search_label=ttk.Label(search_frame, text="ISBN: ")
-tags_search_label=ttk.Label(search_frame, text="Tags: ")
-
-title_text_variable=StringVar()
-author_text_variable=StringVar()
-date_text_variable=StringVar()
-isbn_text_variable=StringVar()
-tags_text_variable=StringVar()
-
-title_search_field=ttk.Entry(search_frame, textvariable=title_text_variable)
-author_search_field=ttk.Entry(search_frame, textvariable=author_text_variable)
-date_search_field=ttk.Entry(search_frame, textvariable=date_text_variable)
-isbn_search_field=ttk.Entry(search_frame, textvariable=isbn_text_variable)
-tags_search_field=ttk.Entry(search_frame, textvariable=tags_text_variable)
-
-
-
-
-for index, label in enumerate([title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]):
-    label.grid(row=index, column=0)
+def create_search_frame(main_frame):
+    search_frame=ttk.Frame(main_frame)
+    search_frame.grid(row=1)
+    print(search_frame.grid_size())
     
-for index, field in enumerate([title_search_field, author_search_field, date_search_field, isbn_search_field, tags_search_field]):
-    field.grid(row=index, column=1, sticky='w')
+    title_search_label=ttk.Label(search_frame, text="Title: ")
+    author_search_label=ttk.Label(search_frame, text="Author: ")
+    date_search_label=ttk.Label(search_frame, text="Date: ")
+    isbn_search_label=ttk.Label(search_frame, text="ISBN: ")
+    tags_search_label=ttk.Label(search_frame, text="Tags: ")
     
-
+    title_text_variable=StringVar()
+    author_text_variable=StringVar()
+    date_text_variable=StringVar()
+    isbn_text_variable=StringVar()
+    tags_text_variable=StringVar()
+    
+    title_search_field=ttk.Entry(search_frame, textvariable=title_text_variable)
+    author_search_field=ttk.Entry(search_frame, textvariable=author_text_variable)
+    date_search_field=ttk.Entry(search_frame, textvariable=date_text_variable)
+    isbn_search_field=ttk.Entry(search_frame, textvariable=isbn_text_variable)
+    tags_search_field=ttk.Entry(search_frame, textvariable=tags_text_variable)
+    
+    
+    
+    
+    for index, label in enumerate([title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]):
+        label.grid(row=index, column=0)
+        
+    for index, field in enumerate([title_search_field, author_search_field, date_search_field, isbn_search_field, tags_search_field]):
+        field.grid(row=index, column=1, sticky='w')
+        
+    return search_frame
+    
+search_frame=create_search_frame(main_frame)
 print(search_frame.grid_size())
     
 def create_book_frame(book_dict,parent):
@@ -176,3 +178,7 @@ main_frame.grid_rowconfigure((0,1), weight=0)
 main_frame.grid_rowconfigure(2, weight=1)
 main_frame.columnconfigure(0, weight=1)
 root.mainloop()
+
+def main():
+    pass
+
