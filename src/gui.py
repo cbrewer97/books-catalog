@@ -8,6 +8,8 @@ Created on Mon Jul 11 13:53:00 2022
 import tkinter as tk
 from tkinter import ttk
 import db_tools as dbt
+from tkscrolledframe import ScrolledFrame
+
 
 
 
@@ -104,23 +106,23 @@ class SearchFrame:
 search_frame=SearchFrame(main_frame)
 print(search_frame.frame.grid_size())
     
-def create_book_frame(book_dict,parent):
-    book_frame=ttk.Frame(parent)
-    for index, tup in enumerate(book_dict.items()):
-        key=tup[0]
-        value=tup[1]
-        attribute_string=str(key)+" :"
-        attribute_label=ttk.Label(book_frame,text=attribute_string)
-        value_label=ttk.Label(book_frame, text=str(value), wraplength=200)
-        attribute_label.grid(row=index+1, column=1,sticky='')
-        value_label.grid(row=index+1, column=2,sticky='w')
-    book_frame.grid_columnconfigure(1, weight=1)
-    book_frame.grid_columnconfigure(2, weight=2)
-    return book_frame
+
+class BookFrame():
+    def __init__(self, book_dict, parent):
+        self.frame=ttk.Frame(parent)
+        for index, tup in enumerate(book_dict.items()):
+            key=tup[0]
+            value=tup[1]
+            attribute_string=str(key)+" :"
+            attribute_label=ttk.Label(self.frame,text=attribute_string)
+            value_label=ttk.Label(self.frame, text=str(value), wraplength=200)
+            attribute_label.grid(row=index+1, column=1,sticky='')
+            value_label.grid(row=index+1, column=2,sticky='w')
+        self.frame.grid_columnconfigure(1, weight=1)
+        self.frame.grid_columnconfigure(2, weight=2)
 
 
 
-from tkscrolledframe import ScrolledFrame
 
 scrolled_frame=ScrolledFrame(main_frame, scrollbars='vertical',use_ttk=True )
 scrolled_frame.grid(row=2, sticky='ns')
@@ -146,7 +148,7 @@ def populate_result_frames(title, author):
     
     for result in search_results:
         book_dict=dbt.as_dict(result)
-        result_frame=create_book_frame(book_dict, my_books_frame)
+        result_frame=BookFrame(book_dict, my_books_frame).frame
         result_frame['borderwidth']=5
         result_frame['relief']='sunken'
         grid_size=my_books_frame.grid_size()
