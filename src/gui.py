@@ -65,18 +65,33 @@ class SearchFrame:
         date_search_label=ttk.Label(self.frame, text="Date: ")
         isbn_search_label=ttk.Label(self.frame, text="ISBN: ")
         tags_search_label=ttk.Label(self.frame, text="Tags: ")
+        self.search_labels={'title': title_search_label,\
+                            'author':author_search_label,\
+                            'date':date_search_label,\
+                            'isbn':isbn_search_label,\
+                            'tags':tags_search_label}
         
         title_text_variable=tk.StringVar()
         author_text_variable=tk.StringVar()
         date_text_variable=tk.StringVar()
         isbn_text_variable=tk.StringVar()
         tags_text_variable=tk.StringVar()
+        self.text_vars={'title': title_text_variable,\
+                        'author': author_text_variable,\
+                        'date': date_text_variable,\
+                        'isbn': isbn_text_variable,\
+                        'tags': tags_text_variable}
         
         title_search_field=ttk.Entry(self.frame, textvariable=title_text_variable)
         author_search_field=ttk.Entry(self.frame, textvariable=author_text_variable)
         date_search_field=ttk.Entry(self.frame, textvariable=date_text_variable)
         isbn_search_field=ttk.Entry(self.frame, textvariable=isbn_text_variable)
         tags_search_field=ttk.Entry(self.frame, textvariable=tags_text_variable)
+        self.search_fields={'title': title_search_field,\
+                            'author': author_search_field,\
+                            'date': date_search_field,\
+                            'isbn': isbn_search_field,\
+                            'tags': tags_search_field}
             
         for index, label in enumerate([title_search_label, author_search_label, date_search_label, isbn_search_label, tags_search_label]):
             label.grid(row=index, column=0)
@@ -151,8 +166,8 @@ def clear_books_results():
         
 search_button=ttk.Button(search_frame.frame, text="Search", \
             command=lambda:populate_result_frames(\
-                        title=title_text_variable.get(), \
-                        author=author_text_variable.get()))
+                        title=search_frame.text_vars['title'].get(), \
+                        author=search_frame.text_vars['author'].get()))
 search_button.grid(row=search_frame.frame.grid_size()[1], column=1, sticky='e')
 
 clear_button=ttk.Button(search_frame.frame, text='Clear', command=clear_books_results)
