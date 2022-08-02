@@ -33,15 +33,8 @@ from tkscrolledframe import ScrolledFrame
 #
 
 
-
-
-
-
-# my_books_frame=ttk.Frame(main_frame)
-# my_books_frame.grid(row=2)
-
 class SearchFrame:
-    def __init__(self, main_frame):
+    def __init__(self, main_frame,my_books_frame):
         self.frame=ttk.Frame(main_frame)
         self.frame.grid(row=1)
         print(self.frame.grid_size())
@@ -86,12 +79,12 @@ class SearchFrame:
             field.grid(row=index, column=1, sticky='w')
             
         self.search_button=ttk.Button(self.frame, text="Search", \
-                    command=lambda:populate_result_frames(\
+                    command=lambda:my_books_frame.populate_result_frames(\
                                 title=self.text_vars['title'].get(), \
                                 author=self.text_vars['author'].get()))
         self.search_button.grid(row=self.frame.grid_size()[1], column=1, sticky='e')
 
-        self.clear_button=ttk.Button(self.frame, text='Clear', command=clear_books_results)
+        self.clear_button=ttk.Button(self.frame, text='Clear', command=lambda: my_books_frame.clear_books_results())
         self.clear_button.grid(row=self.frame.grid_size()[1]-1, column=0)
         
 
@@ -123,86 +116,59 @@ class MyBooksFrame():
         self.frame=books_frame
         self.frame['borderwidth']=5
         self.frame['relief']='sunken'
-        
-def populate_result_frames(title, author):
-    #title=title_text_variable.get()
-    search_results=dbt.search_books(title=title, authors=author)
     
-    for result in search_results:
-        book_dict=dbt.as_dict(result)
-        result_frame=BookFrame(book_dict, my_books_frame.frame).frame
-        result_frame['borderwidth']=5
-        result_frame['relief']='sunken'
-        grid_size=my_books_frame.frame.grid_size()
-        print(grid_size)
-        result_frame.grid(row=grid_size[1]+1, column=0, sticky='w')
-        #result_frame.pack(fill='x',expand=True ,side='top')
-        # result_frame.grid(row=row_number,column=1,sticky='ew')
-        # result_frame.grid_columnconfigure(0, weight=1)
-        # result_frame.grid_rowconfigure(0 ,weight=1)
-        #row_number+=1
+    def populate_result_frames(self, title, author):
+        #title=title_text_variable.get()
+        search_results=dbt.search_books(title=title, authors=author)
         
-def clear_books_results():
-    children=my_books_frame.frame.winfo_children()
-    for child in children:
-        child.destroy()
-    my_books_frame.frame.grid_forget()
+        for result in search_results:
+            book_dict=dbt.as_dict(result)
+            result_frame=BookFrame(book_dict, self.frame).frame
+            result_frame['borderwidth']=5
+            result_frame['relief']='sunken'
+            grid_size=self.frame.grid_size()
+            print(grid_size)
+            result_frame.grid(row=grid_size[1]+1, column=0, sticky='w')
 
-
-#search_results=search_books()
-# book_tuple=search_results[0]
-# book_dict=as_dict(book_tuple)
-
-# result_frame=create_book_frame(book_dict, my_books_frame)
-# result_frame.grid(row=6, column=1)
-
-
-
-
+            
+    def clear_books_results(self):
+        children=self.frame.winfo_children()
+        for child in children:
+            child.destroy()
+        self.frame.grid_forget()
         
 
-
-# for result in search_results:
-#     book_dict=as_dict(result)
-#     result_frame=create_book_frame(book_dict, my_books_frame)
-#     result_frame['borderwidth']=5
-#     result_frame['relief']='sunken'
-#     grid_size=my_books_frame.grid_size()
-#     result_frame.grid(row=grid_size[0], column=0, sticky='w')
-#     #result_frame.pack(fill='x',expand=True ,side='top')
-#     # result_frame.grid(row=row_number,column=1,sticky='ew')
-#     # result_frame.grid_columnconfigure(0, weight=1)
-#     # result_frame.grid_rowconfigure(0 ,weight=1)
-#     row_number+=1
 
 root=tk.Tk()
 
-main_frame=ttk.Frame(root)
-main_frame.pack(fill='both', expand=True)
-#main_frame.grid(sticky='nsew')
-#main_frame.grid_propagate(0)
 
-
-navigation_frame=ttk.Frame(main_frame)
-navigation_frame.grid(row=0, sticky='nsew')
-
-
-my_books_button=ttk.Button(navigation_frame, text="My Books")
-my_books_button.grid(row=1,column=2)
-
-google_search_button=ttk.Button(navigation_frame, text="Google Books")
-google_search_button.grid(row=1, column=3)
-
-search_frame=SearchFrame(main_frame)
-print(search_frame.frame.grid_size())
-
-my_books_frame=MyBooksFrame(main_frame)
-
-main_frame.grid_rowconfigure((0,1), weight=0)
-main_frame.grid_rowconfigure(2, weight=1)
-main_frame.columnconfigure(0, weight=1)
-root.mainloop()
 
 def main():
-    pass
+    main_frame=ttk.Frame(root)
+    main_frame.pack(fill='both', expand=True)
+
+
+    navigation_frame=ttk.Frame(main_frame)
+    navigation_frame.grid(row=0, sticky='nsew')
+
+
+    my_books_button=ttk.Button(navigation_frame, text="My Books")
+    my_books_button.grid(row=1,column=2)
+
+    google_search_button=ttk.Button(navigation_frame, text="Google Books")
+    google_search_button.grid(row=1, column=3)
+
+    my_books_frame=MyBooksFrame(main_frame)
+
+    search_frame=SearchFrame(main_frame,my_books_frame)
+    print(search_frame.frame.grid_size())
+
+
+
+    main_frame.grid_rowconfigure((0,1), weight=0)
+    main_frame.grid_rowconfigure(2, weight=1)
+    main_frame.columnconfigure(0, weight=1)
+    root.mainloop()
+    
+main()
 
