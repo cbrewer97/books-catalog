@@ -6,7 +6,7 @@ Created on Sun Jul 10 17:59:40 2022
 """
 
 from os.path import exists
-
+import google_tools as gt
 import sqlite3
 
 if exists('books.db'):
@@ -72,7 +72,7 @@ def insert_record(**kwargs):
         keys_string=str(keys_tuple)
         values_string=str(values_tuple)
     query_string="insert into books"+keys_string+" values"+values_string
-    print(query_string)
+    #print(query_string)
     connection.execute(query_string)
     connection.commit()
     
@@ -179,4 +179,28 @@ def clean_description_string(book_dict):
     return book_dict
 
             
+def batch_import(file_path):
+    with open(file_path, 'r') as file:
+        line_number=1
+        failed_lines=[]
+        for line in file:
+            try:
+                isbn=line.strip()
+                result=gt.search_google_books(isbn=isbn)[0]
+                result=gt.parse_google_record(result)
+                result=clean_description_string(result)
+                insert_record(**result)
+                print('Inserted record.')
+            except Exception:
+                print('Failed to import record: '+line.strip()+'. Continuing next line.')
+                line_tuple=(line_number, line.strip())
+                failed_lines.append(line_tuple)
+            line_number+=1
+        print('')
+        print('Import completed.\n')
+        if len(failed_lines)!=0:
+            print('Failed to import '+str(len(failed_lines))+' records.')
+            print('Failed lines:')
+            print(failed_lines)
             
+      

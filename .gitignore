@@ -7,3 +7,4 @@ docs/make.bat
 docs/Makefile
 .ipynb_checkpoints/README-checkpoint.md
 docs/build/html/.doctrees/
+src/isbn.txt
